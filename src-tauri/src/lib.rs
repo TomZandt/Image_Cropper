@@ -1,3 +1,6 @@
+mod commands;
+mod image_processing;
+
 use std::path::PathBuf;
 use std::fs;
 use image::{io::Reader as ImageReader, GenericImageView, ImageFormat};
@@ -61,61 +64,20 @@ fn select_folder(app_handle: tauri::AppHandle) -> Option<String> {
     rx.recv().unwrap()
 }
 
-// Tauri command to read image files from a selected folder
-#[tauri::command]
-fn read_images_from_folder(path: PathBuf) -> Result<Vec<PathBuf>, String> {
-    let mut image_paths = Vec::new();
-    for entry in fs::read_dir(path).map_err(|e| e.to_string())? {
-        let entry = entry.map_err(|e| e.to_string())?;
-        let path = entry.path();
-        if path.is_file() {
-            if let Some(extension) = path.extension() {
-                if let Some(ext_str) = extension.to_str() {
-                    if ["jpg", "jpeg", "png"].contains(&ext_str.to_lowercase().as_str()) {
-                        image_paths.push(path);
-                    }
-                }
-            }
-        }
-    }
-    Ok(image_paths)
-}
-
-// Tauri command to crop and save an image
-#[tauri::command]
-fn crop_and_save_image(
-    source_path: PathBuf,
-    output_path: PathBuf,
-    x: u32,
-    y: u32,
-    width: u32,
-    height: u32,
-) -> Result<(), String> {
-    let img = ImageReader::open(&source_path)
-        .map_err(|e| format!("Failed to open image: {}", e))?
-        .decode()
-        .map_err(|e| format!("Failed to decode image: {}", e))?;
-
-    let cropped_img = img.crop_imm(x, y, width, height);
-
-    cropped_img
-        .save(&output_path)
-        .map_err(|e| format!("Failed to save cropped image: {}", e))?;
-
-    Ok(())
-}
-
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
     tauri::Builder::default()
         .plugin(tauri_plugin_opener::init())
         .plugin(tauri_plugin_dialog::init()) // Initialize the dialog plugin
+        .plugin(tauri_plugin_fs::init()) // Initialize the fs plugin
+        .plugin(tauri_plugin_shell::init()) // Initialize the shell plugin
         .invoke_handler(tauri::generate_handler![
             select_folder,
-            read_images_from_folder,
-            crop_and_save_image,
             create_dir_if_not_exists,
-            get_image_base64
+            get_image_base64,
+            commands::load_folder,
+            commands::save_crop_data,
+            commands::export_versions
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
