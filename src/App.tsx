@@ -65,8 +65,10 @@ function App() {
   return (
     <div className="flex flex-col h-screen bg-gray-900 text-white">
       <Toolbar />
-      <div className="flex flex-1">
-        <ImageList /><ImageCanvas /><VersionPanel />
+      <div className="flex flex-1 overflow-hidden">
+        <ImageList />
+        <ImageCanvas />
+        <VersionPanel />
       </div>
     </div>
   );

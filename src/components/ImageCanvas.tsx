@@ -78,7 +78,7 @@ const ImageCanvas: React.FC = () => {
           Select an image to start cropping.
         </div>
       ) : (
-        <Stage width={800} height={600}> {/* Fixed size for now, can be dynamic */}
+        <Stage width={window.innerWidth - 512} height={window.innerHeight - 48}>
           <Layer>
             <Image
               image={image}

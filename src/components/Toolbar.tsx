@@ -3,6 +3,7 @@ import { invoke } from '@tauri-apps/api/core';
 import { useImageStore } from '../stores/imageStore';
 import { ImageFile, ImageCropData } from '../types';
 import { v4 as uuidv4 } from 'uuid';
+import { Button } from '../components/ui/button';
 
 const Toolbar: React.FC = () => {
   const { images, currentImageIndex, setImages, setCurrentImageIndex } = useImageStore();
@@ -87,33 +88,18 @@ const Toolbar: React.FC = () => {
     <div className="flex items-center justify-between p-4 bg-gray-800 text-white">
       <h1 className="text-xl font-bold">Image Cropper</h1>
       <div className="flex space-x-4">
-        <button
-          onClick={handleOpenFolder}
-          className="px-4 py-2 bg-blue-600 rounded-md hover:bg-blue-700 transition-colors"
-        >
+        <Button onClick={handleOpenFolder}>
           Open Folder
-        </button>
-        <button
-          onClick={handlePreviousImage}
-          className="px-4 py-2 bg-gray-600 rounded-md hover:bg-gray-700 transition-colors"
-          disabled={images.length === 0}
-        >
+        </Button>
+        <Button onClick={handlePreviousImage} disabled={images.length === 0}>
           Previous
-        </button>
-        <button
-          onClick={handleNextImage}
-          className="px-4 py-2 bg-gray-600 rounded-md hover:bg-gray-700 transition-colors"
-          disabled={images.length === 0}
-        >
+        </Button>
+        <Button onClick={handleNextImage} disabled={images.length === 0}>
           Next
-        </button>
-        <button
-          onClick={handleExport}
-          className="px-4 py-2 bg-green-600 rounded-md hover:bg-green-700 transition-colors"
-          disabled={images.length === 0}
-        >
+        </Button>
+        <Button onClick={handleExport} disabled={images.length === 0}>
           Export All
-        </button>
+        </Button>
       </div>
     </div>
   );
