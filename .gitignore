@@ -1,28 +1,41 @@
-# General
-.DS_Store
-*.log
-.env
-.env.local
-.env.*.local
-
-# Node / npm / Vite
+# Node.js and Frontend
 node_modules/
 dist/
 .vite/
 coverage/
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Rust and Backend
+target/
+src-tauri/target/
+src-tauri/Cargo.lock
+
+# Tauri Build Artifacts
+src-tauri/gen/
+src-tauri/build/
+src-tauri/debug/
+src-tauri/release/
+
+# Environment Variables
+.env
+.env.local
+.env.*.local
+
+# Logs
+*.log
 npm-debug.log*
 yarn-debug.log*
-yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
 
-# Rust / Cargo
-# Ignore the default target directory
-/target/
-# Ignore the target directory for the Tauri app
-/src-tauri/target/
-
-# Tauri
-# Ignore Tauri build artifacts
-/src-tauri/gen/
-/src-tauri/build/
-/src-tauri/debug/
-/src-tauri/release/
+# OS and Editor Specific
+.DS_Store
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
