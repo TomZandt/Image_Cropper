@@ -1,0 +1,28 @@
+# General
+.DS_Store
+*.log
+.env
+.env.local
+.env.*.local
+
+# Node / npm / Vite
+node_modules/
+dist/
+.vite/
+coverage/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Rust / Cargo
+# Ignore the default target directory
+/target/
+# Ignore the target directory for the Tauri app
+/src-tauri/target/
+
+# Tauri
+# Ignore Tauri build artifacts
+/src-tauri/gen/
+/src-tauri/build/
+/src-tauri/debug/
+/src-tauri/release/
