@@ -238,8 +238,7 @@ npm run tauri build
 ---
 
 ## 🧾 License
-MIT License © 2025 Your Name  
-Free to use, modify, and distribute.
+This project is licensed under the GNU GPLv3 License. See the [LICENSE](LICENSE) file for details.
 
 ---
 
